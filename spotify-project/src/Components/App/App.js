@@ -5,12 +5,27 @@ import { Playlist } from 'spotify-project\src\Components\Playlist\Playlist.js';
 import { SearchBar } from 'spotify-project\src\Components\SearchBar\SearchBar.js';
 import { SearchResults } from 'spotify-project\src\Components\SearchResults\SearchResults.js'
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [{name : ''},{artist : ''},{album : ''},{id : ''}]
+      searchResults: [{name : ''},{artist : ''},{album : ''},{id : ''}],
+      playlistName: 'any string',
+      playlistTracks: [{name : 'yo'},{artist : 'mother'},{album : 'fuckin mama'},{id : '12'}]
     }
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    let currentPlaylist = this.state.playlistTracks;
+
+    if (this.state.playlistTracks.indexOf(track.id) === -1) {
+      currentPlaylist.push(track);
+    }
+
+    this.setState({
+      playlistTracks: currentPlaylist
+    });
   }
 
   render() {
@@ -21,7 +36,7 @@ class App extends React.Component {
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} />
-            <Playlist />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
           </div>
         </div>
       </div>
