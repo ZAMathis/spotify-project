@@ -17,6 +17,7 @@ export class App extends React.Component {
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
   }
 
   addTrack(track) {
@@ -49,6 +50,15 @@ export class App extends React.Component {
     this.setState({
       playlistName: name
     })
+  }
+
+  savePlaylist() {
+    let trackURIS = [];
+    let tracks = this.state.playlistTracks;
+
+    for (let i in tracks) {
+      trackURIS.push(tracks[i].uri);
+    }
   }
 
   render() {
