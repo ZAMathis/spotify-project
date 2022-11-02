@@ -13,7 +13,9 @@ export class App extends React.Component {
       playlistName: 'any string',
       playlistTracks: [{name : 'yo'},{artist : 'mother'},{album : 'fuckin mama'},{id : '12'}]
     }
+
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
   }
 
   addTrack(track) {
@@ -26,6 +28,20 @@ export class App extends React.Component {
     this.setState({
       playlistTracks: currentPlaylist
     });
+  }
+
+  removeTrack(track) {
+    let currentPlaylist = this.state.playlistTracks;
+
+    for (let i in currentPlaylist) {
+      if (track.id === currentPlaylist[i].id) {
+        currentPlaylist.splice(i, 1);
+      }
+
+      this.setState({
+        playlistTracks: currentPlaylist
+      })
+    }
   }
 
   render() {
