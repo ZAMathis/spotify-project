@@ -1,4 +1,4 @@
-let accessToken = "BQDEYQy9tIqeFwiUl-RRpNpc4nG3TFNgwxty0uSt0Z6DNqqoxzGStHgTweQL_NtuK-_nt9HmUkJG7PrM94urIAacbLr6LSCMT6QnmhxdpDnWp7rExsZPrZE6Ipe1FoIsGtjS2ssf205xFrAb5555vAVyPc3sh1i0PNy5t5KIYEg7ob2dB6b2q9UvMaR5L7Le2pc";
+let accessToken = "BQBsTpzWP6HYaO2CrEPxMj9gw0F0S3csuLkplUjI3MQno-76yBH-60WH1AgN1E6U7jK1RaX1HJNalFLuXa6iD06VoTcCBqxGMca0A7MgIJoSvYKs7mRraKFbw4ztUtFWe0A1qPGOJtzw9bf8JvpPTnh0_GDmEm2aOZsus5Xb0mZFfncXL-uQfnFDbymJGcN0YRk";
 const clientID = 'eb4558ba7bdc4a6bbc2599c64da40028';
 const redirectURI = 'http://localhost:3000/';
 
@@ -32,8 +32,102 @@ const Spotify = {
             console.log("Access Token is empty and not in url");
             window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
         }
-    }
+    },
 
-}
+    search(term) {
+        let url = `https://api.spotify.com/v1/search?type=track&q=${term}`;
+        const accessToken = Spotify.getAccessToken();
+
+        return fetch(url, {
+            headers : {
+                Authorization : `Bearer ${accessToken}`
+            }
+        }).then(response => {
+            return response.json()
+            }).then(jsonResponse => {
+                if (!jsonResponse.tracks) {
+                    return [];
+                }
+                return jsonResponse.tracks.items.map(track => ({
+                    id : track.id,
+                    name : track.name,
+                    artist : track.artists[0].name,
+                    album : track.album.name,
+                    uri : track.uri
+                }))
+            }
+        )
+    },
+
+    savePlaylist(playlistName, trackURIS) {
+        if (!playlistName && !trackURIS.length) {
+            return;
+        }
+
+        const accessToken = Spotify.getAccessToken();
+        const headers = {
+            Authorization : `Bearer ${accessToken}`
+        };
+        let userID = "";
+
+        let url = "https://api.spotify.com/v1/me";
+        return fetch(url, {
+            headers : headers
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            console.log("What is the error in savePlaylist() ::  " + jsonResponse);
+            userID = jsonResponse.id;
+            let createPlaylistURL = `https://api.spotify.com/v1/users/${userID}/playlists`;
+
+            return fetch(createPlaylistURL, {
+                    headers : headers,
+                    method : "POST",
+                    body: JSON.stringify({ name : playlistName })
+                }).then(response => {
+                return response.json();
+            }).then(jsonResponse => {
+
+                // Created a new playlist, now lets add tracks to the same playlist we just created
+                let playlistID = jsonResponse.id;
+                let addTrackToPlaylistURL =`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`;
+
+                return fetch(addTrackToPlaylistURL, {
+                    headers : {
+                        Authorization : `Bearer ${accessToken}`
+                    },
+                    method : "POST",
+                    body : JSON.stringify({
+                        uris : trackURIS
+                    })
+                }).then(response => {
+                    return response.json();
+                }).then(jsonResponse => {
+                    playlistID = jsonResponse.id;
+                })
+
+            })
+        })
+    },
+
+    getCurrentPlaylist() {
+        const accessToken = Spotify.getAccessToken();
+        console.log("What is access token:: " + accessToken);
+        const headers = {
+            Authorization : `Bearer ${accessToken}`
+        };
+
+        let url = "https://api.spotify.com/v1/me/playlists";
+        return fetch(url, {
+            headers : headers
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            console.log("what is the current playlists:: " + jsonResponse.href);
+            console.log("what is the current playlists:: " + jsonResponse.items.name);
+            return jsonResponse;
+        })
+    }
+};
 
 export default Spotify
