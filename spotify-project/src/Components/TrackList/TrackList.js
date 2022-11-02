@@ -1,12 +1,13 @@
+/* eslint-disable no-undef */
 import React from "react";
-import { Track } from "spotify-project\src\Components\Track\Track.js";
+import { Track } from "../Track/Track.js";
 import './TrackList.css';
 
 export class TrackList extends React.Component {
     render() {
         return (
             <div className="TrackList">
-                this.props.tracks.map( currentTrack => {
+                this.props.tracks.map(currentTrack => {
                     // eslint-disable-next-line no-undef
                     <Track 
                     track={currentTrack} 

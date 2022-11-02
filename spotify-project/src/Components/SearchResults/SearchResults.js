@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrackList } from 'spotify-project\src\Components\TrackList\TrackList.js';
+import { TrackList } from '../TrackList/TrackList.js';
 import './SearchResults.css';
 
 export class SearchResults extends React.Component {

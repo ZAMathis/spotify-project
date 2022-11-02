@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
-import { TrackList } from 'spotify-project\src\Components\TrackList\TrackList.js';
+import { TrackList } from '../TrackList/TrackList.js';
 import './Playlist.css';
 
 export class Playlist extends React.Component {
