@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
-import './App.css';
+import '../App/App.css';
 import { Playlist } from '../Playlist/Playlist.js';
 import { SearchBar } from '../SearchBar/SearchBar.js';
 import { SearchResults } from '../SearchResults/SearchResults.js'

@@ -1,6 +1,6 @@
 let accessToken = "BQBsTpzWP6HYaO2CrEPxMj9gw0F0S3csuLkplUjI3MQno-76yBH-60WH1AgN1E6U7jK1RaX1HJNalFLuXa6iD06VoTcCBqxGMca0A7MgIJoSvYKs7mRraKFbw4ztUtFWe0A1qPGOJtzw9bf8JvpPTnh0_GDmEm2aOZsus5Xb0mZFfncXL-uQfnFDbymJGcN0YRk";
 const clientID = 'eb4558ba7bdc4a6bbc2599c64da40028';
-const redirectURI = 'http://localhost:3000/';
+const redirectURI = 'http://illegal-feeling.surge.sh';
 
 const Spotify = {
     getAccessToken() {

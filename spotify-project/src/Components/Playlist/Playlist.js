@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
 import { TrackList } from '../TrackList/TrackList.js';
-import './Playlist.css';
+import '../Playlist/Playlist.css';
 
 export class Playlist extends React.Component {
     constructor(props) {

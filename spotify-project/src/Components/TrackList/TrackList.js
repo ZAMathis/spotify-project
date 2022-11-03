@@ -1,21 +1,20 @@
 /* eslint-disable no-undef */
 import React from "react";
 import { Track } from "../Track/Track.js";
-import './TrackList.css';
+import '../TrackList/TrackList.css';
 
 export class TrackList extends React.Component {
     render() {
         return (
             <div className="TrackList">
-                this.props.tracks.map(currentTrack => {
-                    // eslint-disable-next-line no-undef
+                {this.props.tracks.map(currentTrack => {
                     <Track 
                     track={currentTrack} 
                     key={currentTrack.id} 
                     onAdd={this.props.onAdd} 
                     onRemove={this.props.onRemove}
                     isRemoval={this.props.isRemoval} />
-                })
+                })}
             </div>
         );
     }
